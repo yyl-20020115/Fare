@@ -32,128 +32,108 @@
 
 using System;
 
-namespace Fare
+namespace Fare;
+
+/// <summary>
+/// Pair of states.
+/// </summary>
+public class StatePair : IEquatable<StatePair>
 {
     /// <summary>
-    /// Pair of states.
+    /// Initializes a new instance of the <see cref="StatePair"/> class.
     /// </summary>
-    public class StatePair : IEquatable<StatePair>
+    /// <param name="s">The s.</param>
+    /// <param name="s1">The s1.</param>
+    /// <param name="s2">The s2.</param>
+    public StatePair(State s, State s1, State s2)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="StatePair"/> class.
-        /// </summary>
-        /// <param name="s">The s.</param>
-        /// <param name="s1">The s1.</param>
-        /// <param name="s2">The s2.</param>
-        public StatePair(State s, State s1, State s2)
+        this.S = s;
+        this.FirstState = s1;
+        this.SecondState = s2;
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="StatePair"/> class.
+    /// </summary>
+    /// <param name="s1">The first state.</param>
+    /// <param name="s2">The second state.</param>
+    public StatePair(State s1, State s2)
+        : this(null, s1, s2)
+    {
+    }
+
+    public State S { get; set; }
+
+    /// <summary>
+    /// Gets or sets the first component of this pair.
+    /// </summary>
+    /// <value>
+    /// The first state.
+    /// </value>
+    public State FirstState { get; set; }
+
+    /// <summary>
+    /// Gets or sets the second component of this pair.
+    /// </summary>
+    /// <value>
+    /// The second state.
+    /// </value>
+    public State SecondState { get; set; }
+
+    /// <summary>
+    /// Implements the operator ==.
+    /// </summary>
+    /// <param name="left">The left.</param>
+    /// <param name="right">The right.</param>
+    /// <returns>
+    /// The result of the operator.
+    /// </returns>
+    public static bool operator ==(StatePair left, StatePair right) => Equals(left, right);
+
+    /// <summary>
+    /// Implements the operator !=.
+    /// </summary>
+    /// <param name="left">The left.</param>
+    /// <param name="right">The right.</param>
+    /// <returns>
+    /// The result of the operator.
+    /// </returns>
+    public static bool operator !=(StatePair left, StatePair right) => !Equals(left, right);
+
+    /// <inheritdoc />
+    public bool Equals(StatePair other)
+    => other is not null && (object.ReferenceEquals(this, other) || object.Equals(other.FirstState, this.FirstState) && object.Equals(other.SecondState, this.SecondState));
+
+    /// <inheritdoc />
+    public override bool Equals(object obj)
+    {
+        if (object.ReferenceEquals(null, obj))
         {
-            this.S = s;
-            this.FirstState = s1;
-            this.SecondState = s2;
+            return false;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="StatePair"/> class.
-        /// </summary>
-        /// <param name="s1">The first state.</param>
-        /// <param name="s2">The second state.</param>
-        public StatePair(State s1, State s2)
-            : this(null, s1, s2)
+        if (object.ReferenceEquals(this, obj))
         {
+            return true;
         }
 
-        public State S { get; set; }
-
-        /// <summary>
-        /// Gets or sets the first component of this pair.
-        /// </summary>
-        /// <value>
-        /// The first state.
-        /// </value>
-        public State FirstState { get; set; }
-
-        /// <summary>
-        /// Gets or sets the second component of this pair.
-        /// </summary>
-        /// <value>
-        /// The second state.
-        /// </value>
-        public State SecondState { get; set; }
-
-        /// <summary>
-        /// Implements the operator ==.
-        /// </summary>
-        /// <param name="left">The left.</param>
-        /// <param name="right">The right.</param>
-        /// <returns>
-        /// The result of the operator.
-        /// </returns>
-        public static bool operator ==(StatePair left, StatePair right)
+        if (obj.GetType() != typeof(StatePair))
         {
-            return Equals(left, right);
+            return false;
         }
 
-        /// <summary>
-        /// Implements the operator !=.
-        /// </summary>
-        /// <param name="left">The left.</param>
-        /// <param name="right">The right.</param>
-        /// <returns>
-        /// The result of the operator.
-        /// </returns>
-        public static bool operator !=(StatePair left, StatePair right)
+        return this.Equals((StatePair)obj);
+    }
+
+    /// <inheritdoc />
+    public override int GetHashCode()
+    {
+        unchecked
         {
-            return !Equals(left, right);
-        }
-
-        /// <inheritdoc />
-        public bool Equals(StatePair other)
-        {
-            if (object.ReferenceEquals(null, other))
-            {
-                return false;
-            }
-
-            if (object.ReferenceEquals(this, other))
-            {
-                return true;
-            }
-
-            return object.Equals(other.FirstState, this.FirstState)
-                && object.Equals(other.SecondState, this.SecondState);
-        }
-
-        /// <inheritdoc />
-        public override bool Equals(object obj)
-        {
-            if (object.ReferenceEquals(null, obj))
-            {
-                return false;
-            }
-
-            if (object.ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-
-            if (obj.GetType() != typeof(StatePair))
-            {
-                return false;
-            }
-
-            return this.Equals((StatePair)obj);
-        }
-
-        /// <inheritdoc />
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                var result = 0;
-                result = (result * 397) ^ (this.FirstState != null ? this.FirstState.GetHashCode() : 0);
-                result = (result * 397) ^ (this.SecondState != null ? this.SecondState.GetHashCode() : 0);
-                return result;
-            }
+            var result = 0;
+            result = (result * 397) ^ (this.FirstState != null ? this.FirstState.GetHashCode() : 0);
+            result = (result * 397) ^ (this.SecondState != null ? this.SecondState.GetHashCode() : 0);
+            return result;
         }
     }
 }

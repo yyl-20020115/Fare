@@ -1,16 +1,15 @@
 ﻿using System;
 using BenchmarkDotNet.Attributes;
 
-namespace Fare.Benchmarking
+namespace Fare.Benchmarking;
+
+public class Benchmark
 {
-    public class Benchmark
-    {
-        private readonly Random random = new Random();
+    private readonly Random random = new ();
 
-        [Benchmark]
-        public Xeger XegerCtorSimple() => new Xeger(".");
+    [Benchmark]
+    public Xeger XegerCtorSimple() => new (".");
 
-        [Benchmark]
-        public Xeger XegerCtorInjectRandom() => new Xeger(".", this.random);
-    }
+    [Benchmark]
+    public Xeger XegerCtorInjectRandom() => new (".", this.random);
 }

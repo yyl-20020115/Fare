@@ -1,12 +1,8 @@
 ﻿using BenchmarkDotNet.Running;
 
-namespace Fare.Benchmarking
+namespace Fare.Benchmarking;
+
+public static class Program
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            BenchmarkRunner.Run<Benchmark>();
-        }
-    }
+    public static void Main(string[] args) => BenchmarkRunner.Run<Benchmark>();
 }

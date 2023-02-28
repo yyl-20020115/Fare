@@ -130,12 +130,11 @@ namespace Fare
         {
             if (regExp.StartsWith("^"))
             {
-                regExp = regExp.Substring(1);
+                regExp = regExp[1..];
             }
-
             if (regExp.EndsWith("$"))
             {
-                regExp = regExp.Substring(0, regExp.Length - 1);
+                regExp = regExp[..^1];
             }
 
             return regExp;

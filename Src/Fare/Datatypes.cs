@@ -30,15 +30,11 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Fare
-{
-    public static class Datatypes
-    {
-        private static readonly Automaton ws = Automaton.Minimize(Automaton.MakeCharSet(" \t\n\r").Repeat());
+namespace Fare;
 
-        public static Automaton WhitespaceAutomaton
-        {
-            get { return ws; }
-        }
-    }
+public static class DataTypes
+{
+    private static readonly Automaton ws = Automaton.Minimize(Automaton.MakeCharSet(" \t\n\r").Repeat());
+
+    public static Automaton WhitespaceAutomaton => ws;
 }

@@ -30,10 +30,9 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Fare
+namespace Fare;
+
+public interface IAutomatonProvider
 {
-    public interface IAutomatonProvider
-    {
-        Automaton GetAutomaton(string name);
-    }
+    Automaton GetAutomaton(string name);
 }
